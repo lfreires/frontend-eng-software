@@ -1,6 +1,7 @@
 import React from "react";
 
-const Contact = () => (
+const Contact = () => {
+  return (
   <section
       id="contact"
       className="d-flex justify-content-center align-items-center text-white"
@@ -64,6 +65,6 @@ const Contact = () => (
         </div>
       </div>
     </section>
-);
+)};
 
 export default Contact;
