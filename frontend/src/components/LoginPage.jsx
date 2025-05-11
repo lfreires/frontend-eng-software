@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -7,6 +8,12 @@ function LoginPage() {
 
   const location = useLocation();
   const user = location.state?.user || "none";
+
+  const { login } = useAuth();
+
+  function handleLogin(role) {
+    login(role);
+  }
 
   const navigator = useNavigate();
   const [formData, setFormData] = useState({
@@ -31,7 +38,7 @@ function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    handleLogin(user);
     navigator("/home");
   };
 

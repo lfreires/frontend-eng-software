@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 const mentors = [
   {
@@ -25,6 +26,14 @@ const mentors = [
 ];
 
 function MentorList() {
+
+  const navigate = useNavigate();
+
+  function scheduleMentoring(mentor) {
+    console.log(mentor);
+    navigate("/schedule-mentoring", { state: { mentor: mentor } });
+  }
+
   return (
     <section className="w-100 py-5 bg-dark text-light min-vh-100">
       <div className="container">
@@ -49,7 +58,10 @@ function MentorList() {
                     {mentor.expertise} – {mentor.company}
                   </h6>
                   <p className="card-text">{mentor.bio}</p>
-                  <button className="btn btn-outline-light w-100 mt-3">
+                  <button 
+                  className="btn btn-outline-light w-100 mt-3"
+                  onClick={() => scheduleMentoring(mentor)}
+                  >
                     Solicitar Mentoria
                   </button>
                 </div>

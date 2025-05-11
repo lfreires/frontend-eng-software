@@ -9,22 +9,44 @@ import RegisterMentored from './components/RegisterMentored';
 import Main from './components/Main';
 import Login from './components/Login';
 import LoginPage from './components/LoginPage';
+import ScheduleMentoring from './components/ScheduleMentoring';
+import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './AuthContext';
+import Unauthorized from './components/Unauthorized';
 
 AOS.init();
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/register-mentor' element={<RegisterMentor />} />
-        <Route path='/register-mentored' element={<RegisterMentored />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/login-page' element={<LoginPage />} />
-        <Route path='/home' element={<Main />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/register-mentor' element={<RegisterMentor />} />
+          <Route path='/register-mentored' element={<RegisterMentored />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/login-page' element={<LoginPage />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route 
+            path='/schedule-mentoring' 
+            element={
+              <ProtectedRoute allowedRoles={["Mentorado"]}>
+                <ScheduleMentoring />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path='/home' 
+            element={
+              <ProtectedRoute allowedRoles={["Mentorado"]}>
+                <Main />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
