@@ -11,7 +11,7 @@ const HeroSection = () => (
   >
     <div data-aos="fade-up">
       <h1 className="display-4">Transforme sua Carreira com Mentoria</h1>
-      <p className="lead">Essa é a seção principal da sua landing page.</p>
+      <p className="lead">Conectamos você aos melhores mentores para impulsionar seu desenvolvimento profissional</p>
     </div>
   </section>
 );
