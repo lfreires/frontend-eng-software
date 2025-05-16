@@ -5,17 +5,12 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 function LoginPage() {
-
   const location = useLocation();
   const user = location.state?.user || "none";
 
   const { login } = useAuth();
 
-  function handleLogin(role) {
-    login(role);
-  }
-
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     mail: "",
@@ -36,10 +31,26 @@ function LoginPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  // Função async para garantir que login aguarde o fetch do mentorado
+  const handleLogin = async (role, email) => {
+    try {
+      const success = await login(role, email);
+      return success;
+    } catch (error) {
+      console.error("Erro no login:", error);
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleLogin(user);
-    navigator("/home");
+    const success = await handleLogin(user, formData.mail);
+
+    if (success) {
+      navigate("/home");
+    } else {
+      alert("Erro ao fazer login. Tente novamente.");
+    }
   };
 
   return (
@@ -115,7 +126,7 @@ function LoginPage() {
           <button
             type="button"
             className="btn btn-outline-light mb-4"
-            onClick={() => navigator("/login")}
+            onClick={() => navigate("/login")}
             data-aos="fade-left"
           >
             ← Voltar
