@@ -10,6 +10,8 @@ import Main from './components/Main';
 import Login from './components/Login';
 import LoginPage from './components/LoginPage';
 import ScheduleMentoring from './components/ScheduleMentoring';
+import Feedback from './components/Feedback';
+import MentoringManagement from './components/MentoringManagement';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './AuthContext';
 import Unauthorized from './components/Unauthorized';
@@ -28,6 +30,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/login-page' element={<LoginPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/mentoring-management" element={<MentoringManagement />} />
+          <Route path="/feedback" element={<Feedback />} />
           <Route 
             path='/schedule-mentoring' 
             element={
