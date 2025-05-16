@@ -4,8 +4,9 @@ import axios from "axios";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); 
+  const [user, setUser] = useState(null);
   const [mentorado, setMentorado] = useState(null);
+  const [mentorCompleto, setMentorCompleto] = useState(null); 
 
   const login = async (role, userEmail) => {
     try {
@@ -27,10 +28,11 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     setMentorado(null);
+    setMentorCompleto(null); // limpa também o mentor completo
   };
 
   return (
-    <AuthContext.Provider value={{ user, mentorado, login, logout }}>
+    <AuthContext.Provider value={{ user, mentorado, mentorCompleto, setMentorCompleto, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
