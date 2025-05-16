@@ -8,19 +8,23 @@ function MentorList() {
   const [mentors, setMentors] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (mentorado?.id) {
-      axios
-        .get(`http://44.212.29.224:8000/sugestion/${mentorado.id}`)
-        .then((response) => {
-          setMentors(response.data);
-          console.log("Mentores alinhados:", response.data);
-        })
-        .catch((error) => {
-          console.error("Erro ao buscar mentores alinhados:", error);
-        });
+useEffect(() => {
+  if (!mentorado) return;
+
+  const fetchMentors = async () => {
+    try {
+      const response = await axios.get(
+        `http://44.212.29.224:8000/sugestion/${mentorado[0].id}`
+      );
+      setMentors(response.data);
+      console.log("Mentores alinhados:", response.data);
+    } catch (error) {
+      console.error("Erro ao buscar mentores alinhados:", error);
     }
-  }, [mentorado]);
+  };
+
+  fetchMentors();
+}, [mentorado]);
 
   function scheduleMentoring(mentor) {
     console.log(mentor);
@@ -51,11 +55,11 @@ function MentorList() {
                   style={{ maxWidth: "350px" }}
                 >
                   <div className="card-body">
-                    <h5 className="card-title">{mentor.name}</h5>
-                    <h6 className="card-subtitle mb-2 text-muted">
-                      {mentor.expertise} – {mentor.company}
-                    </h6>
-                    <p className="card-text">{mentor.bio}</p>
+                  <h5 className="card-title">{mentor.name}</h5>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    {mentor.areas_of_activity} – {mentor.company_name}
+                  </h6>
+                  <p className="card-text">{mentor.mail}</p>
                     <button
                       className="btn btn-outline-light w-100 mt-3"
                       onClick={() => scheduleMentoring(mentor)}
